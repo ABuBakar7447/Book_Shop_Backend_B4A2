@@ -14,15 +14,12 @@ const createOrders = async (req: Request, res: Response) => {
 
     /// checking products validity and quantity
     if (!productdetails?.quantity || productdetails.quantity < quantity) {
-      res.status(404).json({
-        message: productdetails
-          ? 'Insufficient stock available'
-          : 'product not found',
-        success: false,
-      });
+      
       throw new Error(
         productdetails ? 'Insufficient stock available' : 'product not found',
       );
+
+      
     }
 
     ///setting new product quantity after order
@@ -51,7 +48,7 @@ const createOrders = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(400).json({
-      message: 'Order not created successfully',
+      message:error.message || 'Order not created successfully',
       success: false,
       error: error,
       stack: error?.stack,
