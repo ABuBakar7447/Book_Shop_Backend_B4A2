@@ -47,6 +47,10 @@ const getSingleBookById = async (req: Request, res: Response) => {
     const id = req.params.productId;
     const result = await BookService.getBookByID(id);
 
+    if(!result || result === null){
+      throw new Error('No related data found')
+    }
+
     res.status(200).json({
       message: 'Books retrieved successfully',
       success: true,
